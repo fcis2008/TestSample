@@ -1,0 +1,61 @@
+﻿@page
+@model TestSample.Model.Student
+
+@{
+    ViewData["Title"] = "Student page";
+}
+
+<h1>Simple student form</h1>
+
+<div class="col-md-6">
+    @Html.Label("First name:")
+    @Html.TextBoxFor(model => model.FirstName, new { type = "text", @class = "form-control", placeholder = "First name", required = "required" })
+</div>
+<br />
+<div class="col-md-6">
+    @Html.Label("Last name:")
+    @Html.TextBoxFor(model => model.LastName, new { type = "text", @class = "form-control", placeholder = "Last name", required = "required" })
+</div>
+<br />
+<div class="col-md-6">
+    @Html.Label("Email:")
+    @Html.TextBoxFor(model => model.Email, new { type = "Email", @class = "form-control", placeholder = "Email", required = "required" })
+</div>
+<br />
+<div class="col-md-6">
+    @Html.Label("Is Subscribed:")
+    @Html.CheckBoxFor(model => model.IsSubscribed, new { type = "checkbox" })
+</div>
+<div class="col-md-6">
+    @Html.Label("Date of birth:")
+    @Html.TextBoxFor(model => model.DateOfBirth, new { type = "Date", @class = "form-control", placeholder = "Date of birth", required = "required" })
+</div>
+
+<input type="button" value="Submit" onclick="SendPost()" />
+
+
+<script type="text/javascript">
+    function SendPost() {
+        var data = {
+            "FirstName": $('#FirstName').val(), "LastName": $('#LastName').val(), "Email": $('#Email').val(),
+            "IsSubscribed": $("#IsSubscribed").is(":checked"), "DateOfBirth": $('#DateOfBirth').val()
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44335/Student/ReceiveStudentDetails",
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (res) {
+                console.log("success");
+            }.bind(this),
+            error: function (xhr, status) {
+                console.error("Error");
+            }.bind(this)
+        });
+    }
+</script>
+
+
+
+
